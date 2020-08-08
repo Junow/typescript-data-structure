@@ -9,6 +9,23 @@ describe('linked list', () => {
     expect(ll.size()).toEqual(2)
   })
 
+  it('should contain object', () => {
+    interface Data{
+      num: number
+      str: string
+    }
+    const data:Data = {
+      num: 1,
+      str: 'string',
+    }
+    const ll = new LinkedList<Data>()
+
+    ll.append(data)
+    const node = ll.find(data)
+    expect(node).not.toBeNull()
+    expect(node!.data).toEqual(data)
+  })
+
   it('should get head from linked list', () => {
     const ll = new LinkedList<number>()
     let head = ll.getHead()
@@ -16,10 +33,10 @@ describe('linked list', () => {
     ll.append(1)
     ll.append(2)
     head = ll.getHead()
-    expect(head.data).toEqual(1)
+    expect(head!.data).toEqual(1)
     ll.prepend(0)
     head = ll.getHead()
-    expect(head.data).toEqual(0)
+    expect(head!.data).toEqual(0)
   })
 
   it('should find the node', () => {
@@ -32,8 +49,8 @@ describe('linked list', () => {
     ll.append(data2)
     ll.append(data3)
     const data2Node = ll.find(data2)
-    expect(data2Node.data).toEqual(data2)
-    expect(data2Node.next.data).toEqual(data3)
+    expect(data2Node!.data).toEqual(data2)
+    expect(data2Node!.next!.data).toEqual(data3)
   })
 
   it('should delete tail node', () => {
@@ -42,12 +59,12 @@ describe('linked list', () => {
     ll.append(2)
     ll.append(3)
 
-    expect(ll.getTail().data).toEqual(3)
+    expect(ll.getTail()!.data).toEqual(3)
     ll.removeTail()
-    expect(ll.getTail().data).toEqual(2)
+    expect(ll.getTail()!.data).toEqual(2)
     expect(ll.size()).toEqual(2)
     ll.removeTail()
-    expect(ll.getTail().data).toEqual(1)
+    expect(ll.getTail()!.data).toEqual(1)
     ll.removeTail()
     expect(ll.size()).toEqual(0)
   })
@@ -58,11 +75,11 @@ describe('linked list', () => {
     ll.append(1)
     ll.append(2)
     ll.append(3)
-    expect(ll.getHead().data).toEqual(1)
+    expect(ll.getHead()!.data).toEqual(1)
     ll.removeHead()
-    expect(ll.getHead().data).toEqual(2)
+    expect(ll.getHead()!.data).toEqual(2)
     ll.removeHead()
-    expect(ll.getHead().data).toEqual(3)
+    expect(ll.getHead()!.data).toEqual(3)
     ll.removeHead()
   })
 })

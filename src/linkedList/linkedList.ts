@@ -1,4 +1,5 @@
 import Node from './linkedListNode'
+import deepEqual from '../utils/compare'
 
 class linkedList<T> {
   constructor() {
@@ -23,8 +24,8 @@ class linkedList<T> {
 
   prepend(newData: T): void {
     const newNode = new Node(newData)
-    this._head.next = newNode
     newNode.next = this._head.next
+    this._head.next = newNode
     this._size += 1
   }
 
@@ -57,9 +58,10 @@ class linkedList<T> {
   }
 
   find(target: T): Node<T> | null {
+    if (!this._head.next) return null
     let cur = this._head
     while (cur.next !== null) {
-      if (cur.data === target) return cur
+      if (deepEqual(cur.next.data, target)) return cur.next
       cur = cur.next
     }
     return null
