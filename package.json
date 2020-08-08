@@ -13,8 +13,8 @@
     "data structure"
   ],
   "scripts": {
-    "build": "tsc --watchAll",
-    "test": "jest"
+    "build": "tsc",
+    "test": "jest  --watchAll"
   },
   "devDependencies": {
     "@types/jest": "^26.0.9",
