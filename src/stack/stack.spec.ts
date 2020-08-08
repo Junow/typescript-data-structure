@@ -23,7 +23,7 @@ describe('stack', () => {
     const stack = new Stack<Data>()
     const data: Data = {
       num: 1,
-      str: 'stack'
+      str: 'stack',
     }
     stack.push(data)
     expect(stack.top()).toEqual(data)
@@ -42,8 +42,8 @@ describe('stack', () => {
   })
 
   it('should throw an empty error', () => {
-    const stack =new Stack()
+    const stack = new Stack()
     expect(() => stack.top()).toThrow('stack is empty')
     expect(() => stack.pop()).toThrow('stack is empty')
   })
-}) 
+})
