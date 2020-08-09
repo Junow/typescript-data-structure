@@ -1,16 +1,24 @@
 {
   "name": "tsds",
   "version": "0.0.1",
-  "description": "typscript data structur",
+  "description": "typscript data structure",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "author": {
     "name": "junow",
+    "email": "taristmas@gmail.com",
+    "url": "https://github.com/junow"
+  },
+  "homepage": "https://github.com/Junow/typescript-data-structure",
+  "bugs": {
+    "url": "https://github.com/Junow/typescript-data-structure",
     "email": "taristmas@gmail.com"
   },
   "license": "MIT",
   "keywords": [
-    "data structure"
+    "data structure",
+    "typescript",
+    "algorithm"
   ],
   "scripts": {
     "build": "tsc",
