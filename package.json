@@ -1,6 +1,6 @@
 {
-  "name": "tsds",
-  "version": "0.0.1",
+  "name": "@junow/tsds",
+  "version": "0.1.0",
   "description": "typscript data structure",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -20,6 +20,13 @@
     "typescript",
     "algorithm"
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Junow/typescript-data-structure"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/"
+  },
   "scripts": {
     "build": "tsc",
     "test": "jest  --watchAll"
