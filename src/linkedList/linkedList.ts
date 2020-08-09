@@ -1,5 +1,5 @@
 import Node from './linkedListNode'
-import deepEqual from '../utils/compare'
+import Comparator from '../utils/comparator'
 
 class linkedList<T> {
   constructor() {
@@ -7,6 +7,7 @@ class linkedList<T> {
     this._head = dummy
     this._tail = dummy
     this._size = 0
+    this._comp = new Comparator()
   }
 
   private _head: Node<T>
@@ -14,6 +15,8 @@ class linkedList<T> {
   private _tail: Node<T>
 
   private _size = 0
+
+  private _comp: Comparator<T>
 
   append(newData: T): void {
     const newNode = new Node(newData)
@@ -61,7 +64,7 @@ class linkedList<T> {
     if (!this._head.next) return null
     let cur = this._head
     while (cur.next !== null) {
-      if (deepEqual(cur.next.data, target)) return cur.next
+      if (this._comp.deepEqual(cur.next.data, target)) return cur.next
       cur = cur.next
     }
     return null
