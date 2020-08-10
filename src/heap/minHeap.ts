@@ -2,7 +2,7 @@
 import Comparator from '../utils/comparator'
 
 class MinHeap<T> {
-  constructor(defaultComparator?: Comparator<T>) {
+  constructor(defaultComparator?: (a: T, b: T) => boolean) {
     this._comparator = new Comparator(defaultComparator)
   }
 
@@ -31,24 +31,22 @@ class MinHeap<T> {
   private _heapifyDown() {
     let idx = 0
     while (true) {
-      const leftChildIdx = this._getLeftChildIdx(idx)
-      const rightChildIdx = this._getRightChildIdx(idx)
-      const leftChild = this._getElementAt(leftChildIdx)
-      const rightChild = this._getElementAt(rightChildIdx)
+      const leftChild = this._getElementAt(this._getLeftChildIdx(idx))
+      const rightChild = this._getElementAt(this._getRightChildIdx(idx))
       if (leftChild && rightChild) {
         if (leftChild > rightChild) {
-          this._swap(rightChildIdx, idx)
-          idx = rightChildIdx
+          this._swap(this._getRightChildIdx(idx), idx)
+          idx = this._getRightChildIdx(idx)
         } else {
-          this._swap(leftChildIdx, idx)
-          idx = leftChildIdx
+          this._swap(this._getLeftChildIdx(idx), idx)
+          idx = this._getLeftChildIdx(idx)
         }
       } else if (leftChild && !rightChild) {
-        this._swap(leftChildIdx, idx)
-        idx = leftChildIdx
+        this._swap(this._getLeftChildIdx(idx), idx)
+        idx = this._getLeftChildIdx(idx)
       } else if (rightChild && leftChild) {
-        this._swap(rightChildIdx, idx)
-        idx = rightChildIdx
+        this._swap(this._getRightChildIdx(idx), idx)
+        idx = this._getRightChildIdx(idx)
       } else {
         break
       }
@@ -57,25 +55,19 @@ class MinHeap<T> {
 
   private _headpifyUp() {
     let idx = this.size() - 1
-    let parentIdx = this._getParentIdx(idx)
-    let parent = this._getElementAt(parentIdx)
-    while (parent) {
-      const cur = this._data[idx]
-      if (this._comparator.compare(parent, cur)) {
-        this._swap(parentIdx, idx)
-        idx = parentIdx
-      } else {
-        break
-      }
-
-      parentIdx = this._getParentIdx(idx)
-      parent = this._getElementAt(parentIdx)
+    while (this._hasParent(idx) && this._comparator.compare(this._getParent(idx), this._data[idx])) {
+      this._swap(this._getParentIdx(idx), idx)
+      idx = this._getParentIdx(idx)
     }
   }
 
   private _getElementAt(idx: number): T | undefined {
     if (idx >= this.size()) return undefined
     return this._data[idx]
+  }
+
+  private _getParent(i: number): T {
+    return this._data[this._getParentIdx(i)]
   }
 
   private _getLeftChildIdx(i: number): number {
@@ -88,6 +80,10 @@ class MinHeap<T> {
 
   private _getParentIdx(i: number): number {
     return Math.floor(i / 2)
+  }
+
+  private _hasParent(i: number): boolean {
+    return i > 0
   }
 
   private _swap(idx1: number, idx2: number) {

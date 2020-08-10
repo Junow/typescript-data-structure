@@ -12,7 +12,7 @@ class Comparator<T> {
 
   defaultCompareFunction(a: any, b: any) {
     if (a === b) return 0
-    return a < b ? -1 : 1
+    return a > b ? 1 : -1
   }
 
   deepEqual(obj1: any, obj2: any):boolean {
