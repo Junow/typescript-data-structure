@@ -15,3 +15,5 @@ Launches the test runner in the watch mode with jest
 - Stack
 - Queue
 - LinedList
+- Deque
+- Heap
