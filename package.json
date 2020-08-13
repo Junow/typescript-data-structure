@@ -1,6 +1,6 @@
 {
   "name": "@junow/tsds",
-  "version": "0.2.0",
+  "version": "0.3.4",
   "description": "typscript data structure",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
