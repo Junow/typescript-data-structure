@@ -52,6 +52,8 @@ jobs:
         run: |
           TAG=0.0.0-rc.${{ steps.vars.outputs.github_short_sha }}
           VERSION=v${{ TAG }}
+          echo ${{ TAG }}
+          echo ${{ VERSION }}
           npm version ${{ VERSION }} --no-git-tag-version
           npm publish --tag ${ TAG }
         env:
