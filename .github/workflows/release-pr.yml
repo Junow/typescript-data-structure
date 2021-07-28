@@ -43,7 +43,7 @@ jobs:
       - name: Set Variables
         id: vars
         run: |
-          echo "::set-output name=github_short_sha::$(git rev-parse --short HEAD | cut -c1-7)
+          echo "::set-output name=github_short_sha::$(git rev-parse --short HEAD | cut -c1-7)"
 
       - name: Deploy new Package
         run: |
