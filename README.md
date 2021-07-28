@@ -20,3 +20,4 @@ Launches the test runner in the watch mode with jest
 
 
 gogo
+gogo2
