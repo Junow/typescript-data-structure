@@ -40,6 +40,11 @@ jobs:
       - name: Build Lib
         run: npm run build
 
+      - name: Set Variables
+        id: vars
+        run: |
+          echo "::set-output name=github_short_sha::$(git rev-parse --short HEAD | cut -c1-7)
+
       - name: Deploy new Package
         run: |
           VERSION=0.0.0-rc.${{ steps.vars.outputs.github_short_sha }}
