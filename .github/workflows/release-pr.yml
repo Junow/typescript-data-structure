@@ -55,7 +55,7 @@ jobs:
           echo ${{ TAG }}
           echo ${{ VERSION }}
           npm version ${{ VERSION }} --no-git-tag-version
-          npm publish --tag ${ TAG }
+          npm publish --tag ${{ TAG }}
         env:
           GITHUB_TOKEN: ${{ secrets.NPM_TOKEN_TEST }}
 
