@@ -50,13 +50,11 @@ jobs:
 
       - name: Deploy new Package
         run: |
-          TAG=0.0.0-rc.${{ steps.vars.outputs.github_short_sha }}
-          VERSION=v${{ TAG }}
-          echo ${{ TAG }}
-          echo ${{ VERSION }}
           npm version ${{ VERSION }} --no-git-tag-version
-          npm publish --tag ${ TAG }
+          npm publish --tag ${{ TAG }}
         env:
+          TAG: 0.0.0-rc.${{ steps.vars.outputs.github_short_sha }}
+          VERSION: v${{ TAG }}
           GITHUB_TOKEN: ${{ secrets.NPM_TOKEN_TEST }}
 
       - name: Notify to PR Comment
