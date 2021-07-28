@@ -28,6 +28,9 @@ jobs:
           persist-credentials: false
           ref: ${{ steps.extract-ref.outputs.result }}
 
+      - name: Add GiHub Package Token
+        run: echo "//npm.pkg.github.com/:_authToken=${{ secrets.NPM_TOKEN_TEST }}" > ~/.npmrc
+
       - name: Setup Node.js
         uses: actions/setup-node@v1
         with:
@@ -51,7 +54,7 @@ jobs:
           npm version $VERSION --no-git-tag-version
           npm publish --tag ${{ steps.vars.outputs.github_short_sha }}
         env:
-          GITHUB_TOKEN: ${{ secrets.NPM_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.NPM_TOKEN_TEST }}
 
       - name: Notify to PR Comment
         if: steps.extract-ref.outputs.result != 'refs/heads/master'
