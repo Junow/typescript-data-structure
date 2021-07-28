@@ -50,9 +50,10 @@ jobs:
 
       - name: Deploy new Package
         run: |
-          VERSION=0.0.0-rc.${{ steps.vars.outputs.github_short_sha }}
-          npm version $VERSION --no-git-tag-version
-          npm publish --tag ${{ steps.vars.outputs.github_short_sha }}
+          TAG=0.0.0-rc.${{ steps.vars.outputs.github_short_sha }}
+          VERSION=v${{ TAG }}
+          npm version ${{ VERSION }} --no-git-tag-version
+          npm publish --tag ${ TAG }
         env:
           GITHUB_TOKEN: ${{ secrets.NPM_TOKEN_TEST }}
 
