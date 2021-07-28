@@ -1,0 +1,27 @@
+name: Comment
+
+on:
+  issue_comment:
+    types:
+      - created
+
+jobs:
+  publish:
+    if: github.event.issue.pull_request && startsWith(github.event.comment.body, '/publish')
+    name: Publish With Target
+    runs-on: ubuntu-latest 
+    steps:
+      - name: Dispatch
+        uses: actions/github-script@v4
+        with:
+          github-token: ${{ secrets.NPM_TOKEN }}
+          script: |
+            const issueNumber = context.issue.number
+            await github.actions.createWorkflowDispatch({
+              ...context.repo,
+              workflow_id: 'release-pr.yml',
+              ref: context.ref,
+              inputs: {
+                pr_number: `${issueNumber}`,
+              },
+            })

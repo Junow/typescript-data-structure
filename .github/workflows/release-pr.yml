@@ -1,0 +1,60 @@
+name: ReleasePR
+
+on:
+  workflow_dispatch:
+    inputs:
+      pr_number:
+        description: 'Pull request number triggered'
+        required: false
+        default: ''
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest 
+    steps:
+      - name: Extract ref
+        uses: actions/github-script@v4
+        id: extract-ref
+        with:
+          script: |
+            const prNumber = '${{ github.event.inputs.pr_number }}'
+            return prNumber === '' ? context.ref : `refs/pull/${prNumber}/head`
+          result-encoding: string
+
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 1
+          persist-credentials: false
+          ref: ${{ steps.extract-ref.outputs.result }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: 14.16.0
+          registry-url: 'https://npm.pkg.github.com'
+
+      - name: Install Packages
+        run: npm ci
+
+      - name: Build Lib
+        run: npm run build
+
+      - name: Deploy new Package
+        run: |
+          VERSION=0.0.0-rc.${{ steps.vars.outputs.github_short_sha }}
+          npm version $VERSION --no-git-tag-version
+          npm publish --tag ${{ steps.vars.outputs.github_short_sha }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Notify to PR Comment
+        if: steps.extract-ref.outputs.result != 'refs/heads/master'
+        uses: actions/github-script@v4
+        with:
+          script: |
+            await github.issues.createComment({
+              ...context.repo,
+              issue_number: ${{ github.event.inputs.pr_number }},
+              body: 'NPM Published! Do `npm i tsds@${{ steps.vars.outputs.github_short_sha }}`',
+            })
