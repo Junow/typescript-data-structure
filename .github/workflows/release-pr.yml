@@ -50,7 +50,7 @@ jobs:
 
       - name: Deploy new Package
         run: |
-          npm version v${{ env.TAG }} --no-git-tag-version
+          npm version ${{ env.TAG }} --no-git-tag-version
           npm publish --tag ${{ env.TAG }}
         env:
           TAG: 0.0.0-rc.${{ steps.vars.outputs.github_short_sha }}
